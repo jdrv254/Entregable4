@@ -1,0 +1,39 @@
+﻿@page "/detalle/{id}"
+@using Util;
+@using Model;
+@inject UsuarioClient client;
+<PageTitle>Detalle</PageTitle>
+
+<h1>Detalle del usuario @id</h1>
+
+<main class="container p-5">
+
+  <div class="row">
+ 
+    <div class="card m-3" style="width: 300px;">
+      <div class="card-header">
+       <strong> Name:</strong> @user.name
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong> Username:</strong> @user.username</li>
+        <li class="list-group-item"><strong>Email:</strong> @user.email</li>
+        <li class="list-group-item"><strong>City:</strong> @user.address.city</li>
+        <li class="list-group-item"><strong>Phone:</strong> @user.phone</li>
+        <li class="list-group-item"><strong>Website:</strong> @user.website</li>
+        <li class="list-group-item"><strong>Name Company:</strong> @user.company.name</li>
+      </ul>
+    </div>
+  
+</div>
+</main>
+
+@code {
+
+    [Parameter]
+    public string id { get; set; }
+    private Usuario user;
+    protected override async Task OnInitializedAsync()
+    {
+        user=await client.Getusuario(id);  
+    }
+}

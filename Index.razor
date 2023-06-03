@@ -1,0 +1,39 @@
+﻿@page "/"
+@using Util;
+@using Model;
+@inject UsuarioClient client;
+
+<PageTitle>Index</PageTitle>
+
+<h1>Lista de Usuarios</h1>
+<main class="container p-5">
+
+  <div class="row">
+  @foreach (Usuario user in users)
+  {
+    <div class="card m-3" style="width: 300px;">
+      <div class="card-header">
+       <strong> Name:</strong> @user.name
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong> Username:</strong> @user.username</li>
+        <li class="list-group-item"><a class="card-link" href="detalle/@user.id">Detalles</a></li>
+      </ul>
+    </div>
+  }
+</div>
+</main>
+
+@code {
+
+    private Usuario user = new Usuario();
+    private List<Usuario> users = new List<Usuario>();
+    protected override async Task OnInitializedAsync()
+    {
+        for (int i = 1; i < 11; i++) {
+            users.Add(await client.Getusuario(i.ToString()));
+        }
+    }
+}
+
+
